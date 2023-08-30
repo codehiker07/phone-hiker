@@ -39,8 +39,8 @@ const displayPhones = (phones, isShowAll) => {
         <div class="card-body">
             <h2 class="card-title">${phone.phone_name}</h2>
             <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div class="card-actions justify-end">
-                <button class="btn btn-primary">Buy Now</button>
+            <div class="card-actions justify-center py-2">
+                <button onclick="handleShowDetails('${phone.slug}')" class="btn btn-primary">Show Details</button>
             </div>
         </div>`;
         // 5 AppendChild previously created div containing variable
@@ -48,6 +48,14 @@ const displayPhones = (phones, isShowAll) => {
     });
     // Hide loading spinner
     toggleLoadingSpinner(false)
+}
+
+const handleShowDetails = async (id) => {
+    // console.log('asdf', id);
+    // Load single phone Data
+    const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
+    const data = await res.json();
+    console.log(data);
 }
 
 // Handle Search button
