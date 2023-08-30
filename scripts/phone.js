@@ -1,5 +1,5 @@
 const loadPhone = async (searchText, isShowAll) => {
-    const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
+    const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText = 13}`);
     const data = await res.json();
     const phones = data.data;
     // console.log(phones);
@@ -51,11 +51,33 @@ const displayPhones = (phones, isShowAll) => {
 }
 
 const handleShowDetails = async (id) => {
-    // console.log('asdf', id);
+    // console.log('Id:', id);
     // Load single phone Data
     const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
     const data = await res.json();
-    console.log(data);
+    // const phone = data.data.slug;
+    const phone = data.data;
+    // console.log(phone);
+    showPhoneDetails(phone);
+}
+
+const showPhoneDetails = (phone) => {
+    console.log(phone);
+    const phoneName = document.getElementById('phone-detail-name');
+    phoneName.innerText = phone.name;
+
+    const showDetailContainer = document.getElementById('show-detail-container');
+
+    showDetailContainer.innerHTML = `
+        <img class="container w-[40%] py-5 mx-auto" src="${phone.image}" alt="" />
+        <p class="py-2"><span class="font-bold">Storage:</span> ${phone?.mainFeatures?.storage}</p>
+        <p class="py-2"><span class="font-bold">GPS:</span> ${phone?.others?.GPS || 'No GPS'}</p>
+    `
+
+
+
+    //show the modal
+    show_details_modal.showModal(phone);
 }
 
 // Handle Search button
@@ -81,7 +103,7 @@ const toggleLoadingSpinner = (isLoading) => {
 const handleShowAll = () => {
     handleSearch(true);
 }
-// loadPhone();
+loadPhone();
 
 
 
